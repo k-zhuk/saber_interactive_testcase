@@ -1,0 +1,24 @@
+SQL 1
+Напишите запрос, который выведет, сколько времени в среднем задачи каждой группы находятся в статусе “Open” 
+
+Условия:
+
+Под группой подразумевается первый символ в ключе задачи. Например, для ключа “C-40460” группой будет “C”
+Задача может переходить в один и тот же статус несколько раз.
+Переведите время в часы с округлением до двух знаков после запятой.
+
+
+# ==============================
+
+select substr(issue_key, 1, 1) as group_name,
+	   round(avg(total_time) / 3600000, 2) as group_mean_time
+
+from 
+
+(select issue_key, sum(ended_at - started_at) as total_time
+	from history
+    where status='Open' AND (ended_at is not NULL)
+    group by issue_key)
+    
+group by group_name
+order by group_mean_time desc

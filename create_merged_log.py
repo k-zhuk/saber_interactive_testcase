@@ -58,8 +58,6 @@ def merged_log(path_a: str, path_b: str, path_merged: str) -> None:
             # if logs have different filesize
             if log_a_timestamp == -1:
 
-                print('log_a_timestamp == -1 if', log_b_value)
-
                 log_merged.write(f"{json.dumps(log_b_value)}\n")
                 log_b_value = json.loads(next(log_b, '-1'))
             else:

@@ -14,7 +14,7 @@
 
 ```sql
 select substr(issue_key, 1, 1) as group_name,
-	     round(avg(total_time) / 3600000, 2) as group_mean_time
+       round(avg(total_time) / 3600000, 2) as group_mean_time
 
 from 
 
@@ -46,16 +46,16 @@ order by group_mean_time desc
 
 ```sql
 select issue_key,
-  	   status,
+       status,
        human_date 
 
 from
 
 (select issue_key,
-     		status,
-     		max(started_at) as started_at,
-     		cast(datetime(started_at / 1000,
-                          'unixepoch') as text) as human_date
+	status,
+	max(started_at) as started_at,
+	cast(datetime(started_at / 1000,
+		      'unixepoch') as text) as human_date
  from history
  where status not IN('Closed', 'Resolved')
  group by issue_key
